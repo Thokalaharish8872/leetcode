@@ -1,19 +1,21 @@
 class Solution {
     public int binaryGap(int n) {
-        
-        char[] chArr = Integer.toBinaryString(n).toCharArray();
-        int m = chArr.length;
 
-        int prev1 = -1;
+        int prev1 = -1, curr = 0;
         int maxGap = 0;
 
-        for(int i = 0; i < m; i++){
+        while(n > 0){
 
-            if(chArr[i] == '1'){
-                if(prev1 != -1) maxGap = Math.max(maxGap, i - prev1);
+            int bit = n & 1;
 
-                prev1 = i;
+            if(bit == 1){
+                if(prev1 != -1) maxGap = Math.max(maxGap, curr - prev1);
+
+                prev1 = curr;
             }
+
+            n = n >> 1;
+            curr++;
         }
 
         return maxGap;
