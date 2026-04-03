@@ -8,8 +8,6 @@ class Solution {
             Arrays.fill(e, (int)1e9);
         }
 
-        int minEffort = (int)1e9;
-        
         PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> {
             return a[0] - b[0];
         });
@@ -29,7 +27,7 @@ class Solution {
 
                 if(curri >= 0 && curri < m && currj >=0 && currj < n){
                     int diff = Math.abs(heights[previ][prevj] - heights[curri][currj]);
-
+                    
                     int newEffort = Math.max(e, diff);
     
                     if(newEffort < effort[curri][currj]){
@@ -37,8 +35,6 @@ class Solution {
 
                         pq.add(new int[]{newEffort, curri, currj});
                     }
-
-                    if(curri == m - 1 && currj == n - 1) minEffort = Math.min(minEffort, maxDiff);
                 }
             }
         }
