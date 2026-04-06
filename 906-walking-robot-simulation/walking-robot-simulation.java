@@ -61,6 +61,6 @@ class Solution {
             System.out.println();
         }
 
-        return maxSq == Integer.MIN_VALUE ? 0 : maxSq;
+        return maxSq;
     }
 }
