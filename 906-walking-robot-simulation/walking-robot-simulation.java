@@ -1,6 +1,5 @@
 class Solution {
     int maxSq = 0;
-
     int X = 0, Y = 0;
 
     private void walk(HashSet<String> obs, char dir, int command){
@@ -44,6 +43,7 @@ class Solution {
 
         return dir;
     }
+
     public int robotSim(int[] commands, int[][] obstacles) {
         
         HashSet<String> obs = new HashSet<>();
@@ -58,7 +58,6 @@ class Solution {
             if(command >= 1) walk(obs, dir, command);
             else dir = changeDir(dir, command);
 
-            System.out.println();
         }
 
         return maxSq;
