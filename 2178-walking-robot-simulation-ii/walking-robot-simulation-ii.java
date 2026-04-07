@@ -6,7 +6,7 @@ class Robot {
     int i, j;
     int m, n;
     
-    boolean isMoved;
+    boolean isVisited;
 
     public Robot(int width, int height) {
         i = 0;
@@ -18,11 +18,11 @@ class Robot {
         m = height;
         n = width;
 
-        isMoved = false;
+        isVisited = false;
     }
     
     public void step(int num) {
-        isMoved = true;
+        isVisited = true;
 
         int perimeter = 2 * (m + n) - 4;
         num = (num % perimeter == 0) ? perimeter : num % perimeter;
@@ -44,7 +44,7 @@ class Robot {
     }
     
     public String getDir() {
-        if(!isMoved) return "East";
+        if(!isVisited) return "East";
         return dir[currDir];
     }
 }
