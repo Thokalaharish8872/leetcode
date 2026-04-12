@@ -1,25 +1,15 @@
 class Solution {
-    int[] dp;
+    static int[] dp = new int[31];
 
-    private void preCompute(){
-        dp = new int[31];
+    static {
         dp[0] = 0;
         dp[1] = 1;
-        
-        solve(30);
-    }
-
-    private int solve(int n){
-        if(n <= 1) return n;
-        else if(dp[n] != 0) return dp[n];
-
-        dp[n] = solve(n - 1) + solve(n - 2);
-        return dp[n];
+        for (int i = 2; i <= 30; i++) {
+            dp[i] = dp[i - 1] + dp[i - 2];
+        }
     }
 
     public int fib(int n) {
-        if(dp == null) preCompute();
-
         return dp[n];
     }
 }
