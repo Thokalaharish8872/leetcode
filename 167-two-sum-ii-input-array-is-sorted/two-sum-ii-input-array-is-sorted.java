@@ -5,11 +5,11 @@ class Solution {
         while(i < j){
             int sum = nums[i] + nums[j];
 
-            if(sum == target) return new int[]{i + 1, j + 1};
+            if(sum == target) break;
             else if(sum > target) j--;
             else i++;
         }
 
-        return new int[]{-1, -1};
+        return new int[]{i + 1, j + 1};
     }
 }
