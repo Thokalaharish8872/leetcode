@@ -40,31 +40,28 @@ class Solution {
                     if (type == 6 && (k == 0 || k == 3)) canGo = true;
                     
                     if (!canGo) continue;
-                    
+
                     if(ni >= 0 && nj >= 0 && ni < m && nj < n){
                         if(ni == pi && nj == pj) continue;
                         if(vis[ni][nj]) continue;
 
-                        if(k == 0 && (grid[ni][nj] == 1 || 
-                            grid[ni][nj] == 3 || grid[ni][nj] == 5)){
-                            q.add(new int[]{ni, nj, ci, cj});
-                            vis[ni][nj] = true;
-                        }
-                        else if(k == 1 && (grid[ni][nj] == 2 || 
-                            grid[ni][nj] == 5 || grid[ni][nj] == 6)){
-                                q.add(new int[]{ni, nj, ci, cj});
-                                vis[ni][nj] = true;
-                        }
-                        else if(k == 2 && (grid[ni][nj] == 1 || 
-                            grid[ni][nj] == 4 || grid[ni][nj] == 6)){
-                                q.add(new int[]{ni, nj, ci, cj});
-                                vis[ni][nj] = true;
-                        }
-                        else if(k == 3 && (grid[ni][nj] == 2 || 
-                            grid[ni][nj] == 3 || grid[ni][nj] == 4)){
-                                q.add(new int[]{ni, nj, ci, cj});
-                                vis[ni][nj] = true;
-                        }
+                        int nextType = grid[ni][nj];
+
+                        boolean canComeBack = false;
+
+                        int rev = (k + 2) % 4;
+
+                        if (nextType == 1 && (rev == 0 || rev == 2)) canComeBack = true;
+                        if (nextType == 2 && (rev == 1 || rev == 3)) canComeBack = true;
+                        if (nextType == 3 && (rev == 2 || rev == 1)) canComeBack = true;
+                        if (nextType == 4 && (rev == 0 || rev == 1)) canComeBack = true;
+                        if (nextType == 5 && (rev == 2 || rev == 3)) canComeBack = true;
+                        if (nextType == 6 && (rev == 0 || rev == 3)) canComeBack = true;
+
+                        if (!canComeBack) continue;
+
+                        q.add(new int[]{ni, nj, ci, cj});
+                        vis[ni][nj] = true;
                     }
                 }
             }
