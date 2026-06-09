@@ -1,4 +1,6 @@
 class Solution {
+
+    // recursion
     private int dfs(int[][] obstacleGrid, int[][] dp, int m, int n, int i, int j){
         if(i == 0 && j == 0 && obstacleGrid[i][j] != 1)
             return 1;
