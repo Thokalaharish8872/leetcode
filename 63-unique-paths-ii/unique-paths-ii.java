@@ -1,29 +1,22 @@
 class Solution {
-
-    // recursion
-    private int dfs(int[][] obstacleGrid, int[][] dp, int m, int n, int i, int j){
-        if(i == 0 && j == 0 && obstacleGrid[i][j] != 1)
-            return 1;
-        
-        if(i < 0 || j < 0 || obstacleGrid[i][j] == 1)
-            return 0;
-
-        if(dp[i][j] != - 1)
-            return dp[i][j];
-
-        return dp[i][j] = 
-            dfs(obstacleGrid, dp, m, n, i - 1, j) +
-            dfs(obstacleGrid, dp, m, n, i, j - 1);
-
-
-    }
     public int uniquePathsWithObstacles(int[][] obstacleGrid) {
         int m = obstacleGrid.length, n = obstacleGrid[0].length;
 
         int[][] dp = new int[m][n];
-        for(int[] d : dp)
-            Arrays.fill(d, -1);
 
-        return dfs(obstacleGrid, dp, m, n, m - 1, n - 1);
+        for(int i = 0; i < m; i++){
+            for(int j = 0; j < n; j++){
+
+                if(i == 0 && j == 0 && obstacleGrid[i][j] != 1)
+                    dp[i][j] = 1;
+                
+                if(i > 0 && obstacleGrid[i - 1][j] == 0)
+                    dp[i][j] += dp[i - 1][j];
+                if(j > 0 && obstacleGrid[i][j - 1] == 0)
+                    dp[i][j] += dp[i][j - 1];
+            }
+        }
+
+        return obstacleGrid[m - 1][n - 1] == 1 ? 0 : dp[m - 1][n - 1];
     }
 }
