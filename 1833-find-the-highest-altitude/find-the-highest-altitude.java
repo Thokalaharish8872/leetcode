@@ -6,8 +6,6 @@ class Solution {
         for(int g : gain){
             sum += g;
             maxGain = Math.max(maxGain, sum);
-
-            System.out.println(sum);
         }
 
         return maxGain;
