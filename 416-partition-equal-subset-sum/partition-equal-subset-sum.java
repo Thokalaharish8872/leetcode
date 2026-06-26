@@ -16,16 +16,30 @@ class Solution {
         int n = nums.length;
         int sum = 0;
 
-        int[][] dp = new int[n][2  * 100_00 + 1];
-
-        for (int i = 0; i < n; i++) {
-            Arrays.fill(dp[i], -1);
-            sum += nums[i];
-        }
-
+        for(int num : nums)
+            sum += num;
+        
         if(sum % 2 == 1)
             return false;
 
-        return f(nums, dp, sum / 2, n - 1) == 1;
+        int target = sum / 2;
+
+        boolean[][] dp = new boolean[n][target + 1];
+
+        for (int i = 0; i < n; i++) {
+            Arrays.fill(dp[i], false);
+            dp[i][0] = true;
+        }
+
+        for(int i = 1; i < n; i++){
+            for(int j = 1; j <= target; j++){
+                boolean notPick = dp[i - 1][j];
+                boolean pick = j >= nums[i] ? dp[i - 1][j - nums[i]] : false;
+
+                dp[i][j] = pick || notPick;
+            }
+        }
+
+        return dp[n - 1][target];
     }
 }
