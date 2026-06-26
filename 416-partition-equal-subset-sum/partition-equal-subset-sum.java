@@ -32,7 +32,7 @@ class Solution {
         }
 
         for(int i = 1; i < n; i++){
-            for(int j = 1; j <= target; j++){
+            for(int j = target; j > 0; j--){
                 boolean notPick = dp[i - 1][j];
                 boolean pick = j >= nums[i] ? dp[i - 1][j - nums[i]] : false;
 
