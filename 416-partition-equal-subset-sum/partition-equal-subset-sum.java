@@ -9,11 +9,8 @@ class Solution {
         if(dp[i][target] != -1)
             return dp[i][target];
         
-        int pick = f(nums, dp, target - nums[i], i - 1);
-        if(pick == 1)
-            return dp[i][target] = 1;
-        
-        return dp[i][target] = f(nums, dp, target, i - 1);
+        return dp[i][target] = ((f(nums, dp, target - nums[i], i - 1) == 1) || 
+                    (f(nums, dp, target, i - 1) == 1)) ? 1 : 0;
     }
     public boolean canPartition(int[] nums) {
         int n = nums.length;
