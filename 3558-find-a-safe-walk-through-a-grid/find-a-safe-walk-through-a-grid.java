@@ -4,18 +4,14 @@ class Solution {
 
         int[][] cellHealth = new int[m][n];
         int[] dir = new int[]{0, 1, 0, -1, 0};
-
+        
         for(int[] h : cellHealth){
             Arrays.fill(h, Integer.MAX_VALUE);
         }
 
-        cellHealth[m - 1][n - 1] = grid.get(m - 1).get(n - 1);
-
-        PriorityQueue<int[]> pq = new PriorityQueue<>(
-            (a, b) -> Integer.compare(a[2], b[2])
-        );
-
+        PriorityQueue<int[]> pq = new PriorityQueue<>( (a, b) -> Integer.compare(a[2], b[2]));
         pq.add(new int[]{m - 1, n - 1, grid.get(m - 1).get(n - 1)});
+        cellHealth[m - 1][n - 1] = grid.get(m - 1).get(n - 1);
 
         while(!pq.isEmpty()){
 
