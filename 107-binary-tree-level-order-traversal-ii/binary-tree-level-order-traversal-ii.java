@@ -23,8 +23,7 @@ class Solution {
             outer.add(0, new ArrayList<>());
         }
 
-        List<Integer> inner = outer.get(outer.size() - level - 1);
-        inner.add(root.val);
+        outer.get(outer.size() - level - 1).add(root.val);
 
         if(root.left != null)
             f(root.left, outer, level + 1);
