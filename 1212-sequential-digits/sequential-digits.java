@@ -23,18 +23,11 @@ class Solution {
                 break;
 
             num = Integer.parseInt(digits.substring(i, i + j));
-            list.add(num);
+            if(num >= l && num <= h)
+                list.add(num);
 
             i++;
         }
-
-        int n = list.size();
-
-        if(n > 0 && list.get(n - 1) > h)
-            list.remove(--n);
-            
-        if(n > 0 && list.get(0) < l)
-            list.remove(0);
 
         return list;
     }
