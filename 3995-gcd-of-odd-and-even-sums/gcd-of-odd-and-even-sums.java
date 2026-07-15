@@ -1,16 +1,4 @@
 class Solution {
-    int[] prefix;
-
-    private void preCompute(){
-        prefix = new int[20001];
-
-        prefix[1] = 1;
-        prefix[2] = 2;
-
-        for(int i = 3; i <= 2000; i++){
-            prefix[i] = i + prefix[i - 2];
-        }
-    }
 
     private int gcd(int a, int b){
         while(b > 0){
@@ -24,9 +12,17 @@ class Solution {
 
     public int gcdOfOddEvenSums(int n) {
         
-        if(prefix == null)
-            preCompute();
+        int sumOdd = 0;
+        int sumEven = 0;
 
-        return gcd(prefix[2 * n], prefix[2 * n - 1]);
+        do{
+            sumOdd += (2 * n - 1);
+            sumEven += (2 * n);
+
+            System.out.println(sumOdd + " " + sumEven);
+        }
+        while(n-- > 1);
+
+        return gcd(sumOdd, sumEven);
     }
 }
