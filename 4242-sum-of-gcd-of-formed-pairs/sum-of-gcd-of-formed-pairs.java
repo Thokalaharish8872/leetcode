@@ -13,16 +13,16 @@ class Solution {
 
         int[] prefixGcd = new int[n];
         prefixGcd[0] = nums[0];
-        
+
         int max = nums[0];
 
         for(int i = 1; i < n; i++){
             max = Math.max(max, nums[i]);
 
-            if(max != nums[i])
+            // if(max != nums[i])
                 prefixGcd[i] = gcd(max, nums[i]);
-            else
-                prefixGcd[i] = nums[i];
+            // else
+            //     prefixGcd[i] = nums[i];
         }
 
         Arrays.sort(prefixGcd);
