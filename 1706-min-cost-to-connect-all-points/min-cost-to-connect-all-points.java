@@ -2,29 +2,30 @@ class Solution {
     private int getWeight(int[] u, int[] v){
         return Math.abs(u[0] - v[0]) + Math.abs(u[1] - v[1]);
     }
+
     public int minCostConnectPoints(int[][] points) {
         int n = points.length;
 
-        List<Edge> edges = new ArrayList<>();
+        List<int[]> edges = new ArrayList<>();
 
         for(int u = 0; u < n - 1; u++){
             for(int v = u + 1; v < n; v++){
 
                 int wt = getWeight(points[u], points[v]);
-                edges.add(new Edge(u, v,  wt));
+                edges.add(new int[]{u, v, wt});
             }
         }
 
-        Collections.sort(edges, (v1, v2) -> Integer.compare(v1.wt, v2.wt));
+        Collections.sort(edges, (v1, v2) -> Integer.compare(v1[2], v2[2]));
 
         UFDS dis = new UFDS(n);
 
         int mstCost = 0;
         int selected = 0;
 
-        for(Edge edge : edges){
-            if(dis.union(edge.u, edge.v)){
-                mstCost += edge.wt;
+        for(int[] edge : edges){
+            if(dis.union(edge[0], edge[1])){
+                mstCost += edge[2];
                 selected++;
             }
 
@@ -35,17 +36,6 @@ class Solution {
         return mstCost;
     }
 }
-
-class Edge{
-    int u, v, wt;
-    
-    public Edge(int u, int v, int wt){
-        this.u = u;
-        this.v = v;
-        this.wt = wt;
-    }
-}
-
 
 class UFDS{
     int[] parent;
