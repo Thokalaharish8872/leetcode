@@ -43,9 +43,8 @@ class Solution {
                 totalActiveCount += max.size;
                 i = max.end - 1;
             }
-            else
-                if(s.charAt(i) == '1')
-                    totalActiveCount++;
+            else if(s.charAt(i) == '1')
+                totalActiveCount++;
         }
 
         return totalActiveCount;
