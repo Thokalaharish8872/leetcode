@@ -1,21 +1,30 @@
 class Solution {
 
+    // method to extend windows
     private int iterate(String s, int j, int n, char check){
         while(j < n&& s.charAt(j) == check) j++; 
         return j;
     }
 
-    private int getSectionSize(String s, int sectionSt, int n, MaxActiveSection max){
+    private int getSection(String s, int sectionSt, int n, MaxActiveSection max){
+
+        // extend the windows ('0' 's)
         int activeSt = iterate(s, sectionSt, n, '0');
+
+        // extend the windows ('1' 's)
         int inActiveSt = iterate(s, activeSt, n, '1');
+
+        // extend the windows ('0' 's)
         int sectionEnd = iterate(s, inActiveSt, n, '0');
 
+        // section is invalid
         if(activeSt == n || inActiveSt == n)
             return n;
             
         int sectionSize = sectionEnd - sectionSt;
         int activeBlockSize = inActiveSt - activeSt;
 
+        // update the section
         if(sectionSize - activeBlockSize > max.size - max.activeBlockSize){
             max.size = sectionSize;
             max.activeBlockSize = activeBlockSize;
@@ -30,12 +39,14 @@ class Solution {
     public int maxActiveSectionsAfterTrade(String s) {
         int n = s.length();
 
+        // data storage
         MaxActiveSection max = new MaxActiveSection();
 
         for(int i = 0; i < n; i++)
             if(s.charAt(i) == '0')
-                i = getSectionSize(s, i, n, max) - 1;
+                i = getSection(s, i, n, max) - 1;
         
+        // totalOnes in the trade
         int totalActiveCount = 0;
 
         for(int i = 0; i < n; i++){
