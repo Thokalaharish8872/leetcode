@@ -10,15 +10,15 @@ class Solution {
             return dp[i][amount];
 
         int notPick = f(i - 1, amount, dp, coins);
-        int pick = amount - coins[i] >= 0 ? f(i, amount - coins[i], dp, coins) + 1: (int) 1e9;
+        int pick = amount - coins[i] >= 0 ? f(i, amount - coins[i], dp, coins): (int) 1e9;
 
-        return dp[i][amount] = Math.min(pick, notPick);
+        return dp[i][amount] = Math.min(1 + pick, notPick);
     }
     public int coinChange(int[] coins, int amount) {
 
         if(amount == 0)
             return 0;
-            
+
         int n = coins.length;
         int[][] dp = new int[n][amount + 1];
 
