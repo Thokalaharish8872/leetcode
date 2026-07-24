@@ -1,25 +1,30 @@
 class Solution {
-    public int coinChange(int[] coins, int amount) {
-        int n = coins.length;
+    private int f(int i, int amount, int[][] dp, int[] coins){
+        if(amount == 0)
+            return 0;
 
-        int[][] arr = new int[n + 1][amount + 1];
-
-        for(int i = 0; i <= n; i++)
-            arr[i][0] = 0;
-
-        for(int i = 0; i <= amount; i++)
-            arr[0][i] = (int) 1e9;
+        if(i == -1)
+            return (int)1e9;
         
-        for(int i = 1; i <= n; i++){
-            for(int j = 1; j <= amount; j++){
-                
-                int up = arr[i - 1][j];
-                int left = j - coins[i - 1] >= 0 ? arr[i][j - coins[i - 1]] : (int) 1e9;
+        if(dp[i][amount] != -1)
+            return dp[i][amount];
 
-                arr[i][j] = Math.min(up, left + 1);
-            }
-        }
+        int notPick = f(i - 1, amount, dp, coins);
+        int pick = amount - coins[i] >= 0 ? f(i, amount - coins[i], dp, coins) + 1: (int) 1e9;
 
-        return arr[n][amount] == (int) 1e9 ? -1 : arr[n][amount];
+        return dp[i][amount] = Math.min(pick, notPick);
+    }
+    public int coinChange(int[] coins, int amount) {
+
+        if(amount == 0)
+            return 0;
+            
+        int n = coins.length;
+        int[][] dp = new int[n][amount + 1];
+
+        for(int[] d : dp)
+            Arrays.fill(d, -1);
+
+        return f(n - 1, amount, dp, coins) == (int)1e9 ? -1 : dp[n - 1][amount];
     }
 }
