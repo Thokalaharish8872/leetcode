@@ -5,25 +5,20 @@ class Solution {
         int n = t.length();
 
         int[] prev = new int[n + 1];
-        int[] curr = new int[n + 1];
 
         prev[0] = 1;
-        curr[0] = 1;
+        int topLeft = 1;
 
         for(int i = 1; i <= m; i++){
-            for(int j = 1; j <= n; j++){
+            for(int j = n; j >= 1; j--){
                 int notPick = prev[j];
 
                 int pick = 0;
                 if(s.charAt(i - 1) == t.charAt(j - 1))
                     pick = prev[j - 1];
 
-                curr[j] = pick + notPick;
+                prev[j] = pick + notPick;
             }
-
-            int[] temp = prev;
-            prev = curr;
-            curr = temp;
         }
 
         return prev[n];
