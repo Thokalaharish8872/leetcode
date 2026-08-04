@@ -2,18 +2,23 @@ class Solution{
     public int maxProfit(int k, int[] prices) {
         int n = prices.length;
 
-        int[][] dp = new int[n + 1][2*k + 1];
+        int[] next = new int[2 * k + 1];
+        int[] curr = new int[2 * k + 1];
 
         for(int i = n - 1; i >= 0; i--){
             for(int j = 1; j <= 2 * k; j++){
                 if((j & 1) == 0)
-                    dp[i][j] = Math.max(-prices[i] + dp[i + 1][j - 1], dp[i + 1][j]);
+                    curr[j] = Math.max(-prices[i] + next[j - 1], next[j]);
                 else
-                    dp[i][j] = Math.max(prices[i] + dp[i + 1][j - 1], dp[i + 1][j]);
+                    curr[j] = Math.max(prices[i] + next[j - 1], next[j]);
             }
+
+            int[] temp = next;
+            next = curr;
+            curr = temp;
         }
             
-        return dp[0][2 * k];
+        return next[2 * k];
     }
 }
 
