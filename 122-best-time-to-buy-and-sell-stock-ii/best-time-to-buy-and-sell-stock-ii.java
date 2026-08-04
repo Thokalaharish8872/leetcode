@@ -2,30 +2,56 @@ class Solution {
     public int maxProfit(int[] prices) {
         int n = prices.length;
 
-        int[] prev = new int[n + 1];
-        int[] curr = new int[n + 1];
-
-        prev[1] = -(int)1e9;
+        int prevNotBuy = 0;
+        int prevBuy = -(int)1e9;
 
         for(int i = 1; i <= n; i++){
-            curr[1] = Math.max(
-                -prices[i - 1] + prev[0],
-                prev[1]
+            int buy = Math.max(
+                -prices[i - 1] + prevNotBuy,
+                prevBuy
             );
 
-            curr[0] = Math.max(
-                prices[i - 1] + prev[1],
-                prev[0]
+            int notBuy = Math.max(
+                prices[i - 1] + prevBuy,
+                prevNotBuy
             );
 
-            int[] temp = prev;
-            prev = curr;
-            curr = temp;
+            prevNotBuy = notBuy;
+            prevBuy = buy;
         }
 
-        return prev[0];
+        return prevNotBuy;
     }
 }
+
+// class Solution {
+//     public int maxProfit(int[] prices) {
+//         int n = prices.length;
+
+//         int[] prev = new int[n + 1];
+//         int[] curr = new int[n + 1];
+
+//         prev[1] = -(int)1e9;
+
+//         for(int i = 1; i <= n; i++){
+//             curr[1] = Math.max(
+//                 -prices[i - 1] + prev[0],
+//                 prev[1]
+//             );
+
+//             curr[0] = Math.max(
+//                 prices[i - 1] + prev[1],
+//                 prev[0]
+//             );
+
+//             int[] temp = prev;
+//             prev = curr;
+//             curr = temp;
+//         }
+
+//         return prev[0];
+//     }
+// }
 
 // tabulation
 
