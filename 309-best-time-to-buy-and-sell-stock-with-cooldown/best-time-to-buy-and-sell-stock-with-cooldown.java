@@ -5,13 +5,21 @@ class Solution {
     public int maxProfit(int[] prices) {
         int n = prices.length;
 
-        int[][] dp = new int[n + 2][2];
+        int[] nextNext = new int[2];
+        int[] next = new int[2];
+        int[] curr = new int[2];
 
         for(int i = n - 1; i >= 0; i--){
-            dp[i][0] = Math.max(prices[i] + dp[i + 2][1], dp[i + 1][0]);
-            dp[i][1] = Math.max(-prices[i] + dp[i + 1][0], dp[i + 1][1]);
+
+            curr[0] = Math.max(prices[i] + nextNext[1], next[0]);
+            curr[1] = Math.max(-prices[i] + next[0], next[1]);
+            
+            int[] temp = nextNext;
+            nextNext = next;
+            next = curr;
+            curr = temp;
         }
 
-        return dp[0][1];
+        return next[1];
     }
 }
