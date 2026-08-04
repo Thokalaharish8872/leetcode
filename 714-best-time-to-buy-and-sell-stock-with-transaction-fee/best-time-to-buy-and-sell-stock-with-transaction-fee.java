@@ -11,13 +11,17 @@ class Solution {
         
         return dp[i][buy] = Math.max(prices[i] + f(prices, dp, i + 1, 1, fee) - fee, f(prices, dp, i + 1, 0, fee));
     }
+
     public int maxProfit(int[] prices, int fee) {
         int n = prices.length;
 
         int[][] dp = new int[n + 1][2];
-        for(int[] d : dp)
-            Arrays.fill(d, -1);
+
+        for(int i = n - 1; i >= 0; i--){
+            dp[i][0] = Math.max(prices[i] + dp[i + 1][1] - fee, dp[i + 1][0]);
+            dp[i][1] = Math.max(-prices[i] + dp[i + 1][0], dp[i + 1][1]);
+        }
         
-        return f(prices, dp, 0, 1, fee);
+        return dp[0][1];
     }
 }
