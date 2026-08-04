@@ -1,26 +1,56 @@
-
 class Solution {
     public int maxProfit(int[] prices) {
         int n = prices.length;
 
-        int[][] dp = new int[n + 1][2];
-        dp[0][1] = -(int)1e9;
+        int[] prev = new int[n + 1];
+        int[] curr = new int[n + 1];
+
+        prev[1] = -(int)1e9;
 
         for(int i = 1; i <= n; i++){
-            dp[i][1] = Math.max(
-                -prices[i - 1] + dp[i - 1][0],
-                dp[i - 1][1]
+            curr[1] = Math.max(
+                -prices[i - 1] + prev[0],
+                prev[1]
             );
 
-            dp[i][0] = Math.max(
-                prices[i - 1] + dp[i - 1][1],
-                dp[i - 1][0]
+            curr[0] = Math.max(
+                prices[i - 1] + prev[1],
+                prev[0]
             );
+
+            int[] temp = prev;
+            prev = curr;
+            curr = temp;
         }
 
-        return dp[n][0];
+        return prev[0];
     }
 }
+
+// tabulation
+
+// class Solution {
+//     public int maxProfit(int[] prices) {
+//         int n = prices.length;
+
+//         int[][] dp = new int[n + 1][2];
+//         dp[0][1] = -(int)1e9;
+
+//         for(int i = 1; i <= n; i++){
+//             dp[i][1] = Math.max(
+//                 -prices[i - 1] + dp[i - 1][0],
+//                 dp[i - 1][1]
+//             );
+
+//             dp[i][0] = Math.max(
+//                 prices[i - 1] + dp[i - 1][1],
+//                 dp[i - 1][0]
+//             );
+//         }
+
+//         return dp[n][0];
+//     }
+// }
 
 // recursion + memoiation
 
