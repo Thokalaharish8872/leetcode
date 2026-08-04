@@ -2,25 +2,18 @@ class Solution {
     public int maxProfit(int[] prices) {
         int n = prices.length;
 
-        int prevNotBuy = 0;
-        int prevBuy = -(int)1e9;
+        int nextBuy = 0;
+        int nextSell = 0;
 
-        for(int i = 1; i <= n; i++){
-            int buy = Math.max(
-                -prices[i - 1] + prevNotBuy,
-                prevBuy
-            );
+        for(int i = n; i > 0; i--){
+            int currBuy = Math.max(-prices[i - 1] + nextSell, nextBuy);
+            int currSell = Math.max(prices[i - 1] + nextBuy, nextSell);
 
-            int notBuy = Math.max(
-                prices[i - 1] + prevBuy,
-                prevNotBuy
-            );
-
-            prevNotBuy = notBuy;
-            prevBuy = buy;
+            nextBuy = currBuy;
+            nextSell = currSell;
         }
 
-        return prevNotBuy;
+        return nextBuy;
     }
 }
 
