@@ -1,12 +1,12 @@
 class Solution {
     public List<Integer> remainingMethods(int n, int k, int[][] invocations) {
-        List<List<Integer>> graph = new ArrayList<>();
+        List<Integer>[] graph = new ArrayList[n];
 
         for(int i = 0; i < n; i++)
-            graph.add(new ArrayList<>());
-
+            graph[i] = new ArrayList<>();
+            
         for(int[] invoke : invocations)
-            graph.get(invoke[0]).add(invoke[1]);
+            graph[invoke[0]].add(invoke[1]);
 
         boolean[] isInvoked = new boolean[n];
         isInvoked[k] = true;
@@ -17,7 +17,7 @@ class Solution {
         while(!q.isEmpty()){
             int u = q.poll();
 
-            for(int v : graph.get(u)){
+            for(int v : graph[u]){
 
                 if(!isInvoked[v]){
                     isInvoked[v] = true;
