@@ -27,14 +27,14 @@ class Solution {
             }
         }
 
-        boolean canRemoveAll = false;
+        boolean canRemoveAll = true;
 
         for(int[] invoke : invocations){
             int u = invoke[0];
             int v = invoke[1];
 
             if(!isInvoked[u] && isInvoked[v]){
-                canRemoveAll = true;
+                canRemoveAll = false;
                 break;
             }
         }
@@ -42,7 +42,7 @@ class Solution {
         List<Integer> ans = new ArrayList<>();
 
         for(int i = 0; i < n; i++)
-            if(canRemoveAll || !isInvoked[i])
+            if(!canRemoveAll || !isInvoked[i])
                 ans.add(i);
 
         return ans;
