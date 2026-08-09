@@ -18,7 +18,7 @@ class Solution {
             }
         }
 
-
+        // intially the dp should filled with 1 to minimize runtime we kept it as 0 and then later we added one to make it balance
         return max + 1;
     }
 }
