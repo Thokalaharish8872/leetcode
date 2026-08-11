@@ -1,24 +1,27 @@
 
-// maintaining prev greater value 
-
 class Solution {
+
     public int lengthOfLIS(int[] nums) {
         int n = nums.length;
 
-        int[] dp = new int[n];
-        int max = 0;
+        List<Integer> ans = new ArrayList<>();
+        ans.add(nums[0]);
 
-        for(int i = 0; i < n; i++){
-            for(int prev = 0; prev < i; prev++){
-                if(nums[prev] < nums[i]){
-                    dp[i] = Math.max(dp[i], 1 + dp[prev]);
+        int k = 1;
 
-                    max = Math.max(max, dp[i]);
-                }
+        for(int i = 1; i < n; i++){
+            if(nums[i] > ans.get(k - 1)){
+                ans.add(nums[i]);
+                k++;
+            }
+            else{
+                int ceil = -Collections.binarySearch(ans, nums[i]) - 1;
+
+                if(ceil >= 0)
+                    ans.set(ceil, nums[i]);
             }
         }
-
-        // intially the dp should filled with 1 to minimize runtime we kept it as 0 and then later we added one to make it balance
-        return max + 1;
+        
+        return k;
     }
 }
