@@ -5,7 +5,9 @@ class Solution {
 
         for(int num : nums){
             ans ^= num;
-            if(num != 0) allZeros = false;
+            
+            if(num != 0) 
+                allZeros = false;
         }
 
         if(allZeros) return 0;
