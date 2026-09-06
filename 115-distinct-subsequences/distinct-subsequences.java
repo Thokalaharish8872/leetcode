@@ -55,22 +55,28 @@ class Solution {
         int m = s.length();
         int n = t.length();
 
-        int[][] dp = new int[m + 1][n + 1];
-        for(int i = 0; i <= m; i++)
-            dp[i][n] = 1;
+        int[] curr = new int[n + 1];
+        int[] prev = new int[n + 1];
+
+        curr[n] = 1;
+        prev[n] = 1;
 
         for(int i = m - 1; i >= 0; i--){
             for(int j = n - 1; j >= 0; j--){
-                int notPick = dp[i + 1][j];
+                int notPick = prev[j];
                 int pick = 0;
 
                 if(s.charAt(i) == t.charAt(j))
-                    pick = dp[i + 1][j + 1];
+                    pick = prev[j + 1];
 
-                dp[i][j] = pick + notPick;
+                curr[j] = pick + notPick;
             }
+
+            int[] temp = prev;
+            prev = curr;
+            curr = temp;
         }
 
-        return dp[0][0];
+        return prev[0];
     }
 }
