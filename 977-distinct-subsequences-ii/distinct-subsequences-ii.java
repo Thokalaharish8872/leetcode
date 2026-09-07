@@ -23,8 +23,24 @@ class Solution {
         int n = s.length();
         int MOD = 100_000_000_7;
 
-        long[] dp = new long[n];
-        Arrays.fill(dp, -1);
+        long[] dp = new long[n + 1];
+        dp[n] = 1;
 
-        return (int)((f(s, dp, 0, MOD) - 1 + MOD) % MOD);    }
+        for(int i = n - 1; i >= 0; i--){
+            char ch = s.charAt(i);
+
+            long res = (2 * dp[i + 1]) % MOD;
+
+            int j = i + 1;
+            while (j < s.length() && s.charAt(j) != s.charAt(i))
+                j++;
+            
+            if(j < s.length())
+                res = (res - dp[j + 1] + MOD) % MOD;
+
+            dp[i] = res;
+        }
+
+        return (int)((dp[0] - 1 + MOD) % MOD);    
+    }
 }
