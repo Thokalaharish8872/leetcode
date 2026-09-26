@@ -1,109 +1,99 @@
 class LRUCache {
+    List<Node> list;
     Map<Integer, Node> map;
-    int capacity;
-
-    CDLL cdll;
+    
+    CCDL ccdl;
 
     public LRUCache(int capacity) {
-        cdll = new CDLL();
-
+        list = new ArrayList<>();
         map = new HashMap<>();
-        this.capacity = capacity;
+
+        ccdl = new CCDL(capacity, map);
     }
     
     public int get(int key) {
-        if(!map.containsKey(key))
-            return -1;
-        
-        return cdll.moveBegin(map.get(key));
+        if(map.containsKey(key))
+            return ccdl.updatetoLatest(map.get(key));
+        return -1;
     }
     
     public void put(int key, int value) {
-        Node node;
-
-        if(map.containsKey(key)){
-            node = map.get(key);
-            node.val = value;
-
-            cdll.moveBegin(node);
-        }
-        else{
-            node = new Node(key, value);
-            
-            if(map.size() == capacity){
-                Node removed = cdll.removeLast();
-                map.remove(removed.key);
-            }
-            
-            cdll.addNode(node);
-            map.put(key, node);
-        }
+        if(map.containsKey(key))
+            ccdl.updateValueInList(map.get(key), value);
+        else
+            map.put(key, ccdl.addNewNode(key, value));
     }
 }
 
-class CDLL{
-    Node head;
+class CCDL{
+    Node head, tail;
+    int size, capacity;
     Map<Integer, Node> map;
 
-    int moveBegin(Node node){
-        if(node == head)
-            return node.val;;
-        
-        node.prev.next = node.next;
-        node.next.prev = node.prev;
-        
-        node.next = head;
-        node.prev = head.prev;
-        head.prev.next = node;
-        head.prev = node;
-
-        head = node;
-
-        return node.val;
+    public CCDL(int capacity, Map<Integer, Node> map){
+        size = 0;
+        this.capacity = capacity;
+        this.map = map;
     }
 
-    Node removeLast(){
-        Node rem = head;
+    Node addNewNode(int key, int value){
+        Node newNode = new Node(key, value);
+        size++;
 
-        if(head.prev == head){
-            head = null;
-            return rem;
-        }
-
-        rem = head.prev;
-
-        head.prev.prev.next = head;
-        head.prev = head.prev.prev;
-
-        return rem;
-    }
-
-    void addNode(Node node){
         if(head == null){
-            head = node;
-            head.prev = head;
-            head.next = head;
-            return;
+            head = tail = newNode;
+        }
+        else{
+
+            tail.next = newNode;
+            newNode.prev = tail;
+
+            tail = newNode;
+
+            if(size > capacity){
+                map.remove(head.key);
+
+                head = head.next;
+                head.prev = null;
+
+                size--;
+            }
         }
 
-        head.prev.next = node;
-        node.prev = head.prev;
+        return newNode;
+    }
+    void updateValueInList(Node address, int value){
+        address.value = value;
 
-        head.prev = node;
-        node.next = head;
+        if(address == tail)
+            return;
+        if(address == head)
+            head = head.next;
+        else
+            address.prev.next = address.next;
+        address.next.prev = address.prev;
 
-        head = node;
+        tail.next = address;
+        address.prev = tail;
+        address.next = null;
+
+        tail = address;
     }
 
+    public int updatetoLatest(Node address){
+        updateValueInList(address, address.value);
+
+        return address.value;
+    }
 }
 
 class Node{
-    int key, val;
     Node prev, next;
+    int key, value;
 
-    Node(int key, int val){
+    public Node(int key, int value){
         this.key = key;
-        this.val = val;
+        this.value = value;
     }
 }
 
