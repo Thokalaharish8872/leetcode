@@ -13,7 +13,7 @@ class LRUCache {
     
     public int get(int key) {
         if(map.containsKey(key))
-            return ccdl.updatetoLatest(map.get(key));
+            return ccdl.moveFirst(map.get(key));
         return -1;
     }
     
@@ -64,24 +64,23 @@ class CCDL{
     }
     void updateValueInList(Node address, int value){
         address.value = value;
-
-        if(address == tail)
-            return;
-        if(address == head)
-            head = head.next;
-        else
-            address.prev.next = address.next;
-        address.next.prev = address.prev;
-
-        tail.next = address;
-        address.prev = tail;
-        address.next = null;
-
-        tail = address;
+        moveFirst(address);
     }
 
-    public int updatetoLatest(Node address){
-        updateValueInList(address, address.value);
+    public int moveFirst(Node address){
+        if(address != tail){
+            if(address == head)
+                head = head.next;
+            else
+                address.prev.next = address.next;
+            address.next.prev = address.prev;
+
+            tail.next = address;
+            address.prev = tail;
+            address.next = null;
+
+            tail = address;
+        }
 
         return address.value;
     }
