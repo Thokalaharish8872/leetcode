@@ -1,36 +1,18 @@
 class Solution {
     public boolean isValid(String s) {
+        char[] arr = new char[]{'(', ')', '[', ']', '{', '}'};
 
         Stack<Character> st = new Stack<>();
         st.push('.');
 
         for(char ch : s.toCharArray()){
-            switch(ch){
-                case '(' : 
-                case '[' :
-                case '{' :
-                    st.push(ch);
-                    break;
-
-                case ')' : if(st.peek() == '(')
-                                st.pop();
-                            else
-                                st.push(')');
-                            break;
-                    
-                case ']' : if(st.peek() == '[')
-                                st.pop();
-                            else 
-                                st.push(']');
-
-                            break;
-
-                case '}' : if(st.peek() == '{')
-                                st.pop();
-                            else st.push('}');
-                            
-                            break; 
-            }
+            if((ch == arr[1] && st.peek() == arr[0]) || 
+                (ch == arr[3] && st.peek() == arr[2]) || 
+                (ch == arr[5] && st.peek() == arr[4])
+            )
+                st.pop();
+            else
+                st.push(ch);
         }
 
         return st.size() == 1;
